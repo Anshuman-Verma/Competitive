@@ -1,0 +1,9 @@
+Here's some cool stuff and libraries which i used or encountered in cpp
+
+ternary operator
+bitset class // working with binaries
+set class  // effecient substitute for arrays when heavy  comaprison is reqd.
+#inlcude<bits/stdc++.h>  // includes all libraries! (saves the pain of importing all)
+std::ios::sync_with_stdio(false);  // speeds up cin, cout thus reducing ip and op time
+
+
