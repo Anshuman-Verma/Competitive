@@ -15,20 +15,20 @@ int main(){
 		
 		//inverting students faces
 		for(int i = 0; i<s.length() ; i++){
-			if(s.substr(i,i+1)=="*")
+			if(s.at(i)=='*')
 				continue;
 			
-			else if(s.substr(i,i+1)=="<")
-				s.at(i) = ">";
+			else if(s.at(i)=='<')
+				s.at(i) = '>';
 				
-			else if(s.substr(i,i+1)==">")
-				s.at(i) = "<";
+			else if(s.at(i)=='>')
+				s.at(i) = '<';
 		}
-			
+		//	cout << s  << endl;  //  just for checking !
 		int count = 0;		
 		//analysing talking students
 		for(int i =0; i<s.length()-1; i++){
-				if(s.at(i)==">" && s.at(i+1)=="<")
+				if(s.at(i)=='>' && s.at(i+1)=='<')
 					count++;
 		}
 		
