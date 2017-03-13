@@ -351,9 +351,11 @@ bigint operator*(const bigint &v) const {
 };
 
 int main(){
-
- int t; 
- cin>>t; 
- bigint fact=1;
- for(int i=1;i<=t;i++)
- fact*=i; cout<<fact<<endl; return 0; }
+	 int t; 
+	 cin>>t; 
+	 bigint fact=1;
+	 for(int i=1;i<=t;i++)
+	 fact*=i; 
+	 cout<<fact<<endl; 
+	 return 0;
+  }
