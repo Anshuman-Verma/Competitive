@@ -8,10 +8,6 @@
  
 using namespace std;
  
-/*void func(int n,int m,int a[])
-{
- 
-}*/
 struct post{
     int s=0,p,f;
     string a;
@@ -19,12 +15,8 @@ struct post{
 };
  
  
- 
- 
- 
 int main()
 {
- 
     int n,m,i,j;
     cin>>n>>m;
     post r[m];
@@ -42,12 +34,12 @@ int main()
             }
         }
     }
-     post temp;
+    
+    post temp;
     for(i=0;i<m;i++)
     {
         for(j=0;j<(m-i-1);j++)
-            if(r[j].p<r[j+1].p)
-            {
+            if(r[j].p<r[j+1].p){
                 temp=r[j];
                 r[j]=r[j+1];
                 r[j+1]=temp;
@@ -65,16 +57,12 @@ int main()
             cout<<r[i].a<<endl;
         else
             b[j++]=i;
- 
     }
+    
     for(int i=0;i<j;i++)
     {
         cout<<r[b[i]].a<<endl;
     }
- 
- 
- 
- 
  
  
  
