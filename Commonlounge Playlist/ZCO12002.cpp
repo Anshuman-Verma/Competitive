@@ -1,51 +1,148 @@
-#include<bits/stdc++.h>
-
-#define newl "\n"
-#define MODULO 1000000007
+#include <iostream>
+#include <algorithm>
+#include <functional>
 
 using namespace std;
 
-int main(){
-	std::ios::sync_with_stdio(false);
-	
-	int n, depth=0, depthpos=1, maxseq=0, maxpos=1, cons = 0, count = 0, flag = 0;
-	cin >> n;
-	vector<int> brac(n+1);
-	for(int i =1; i<=n; i++){
-		cin >> brac[i];
-		
-		if(brac[i]==1){
-			count++;
-		}	
-		else{
-			if(count>depth){
-			depth = count;
-			depthpos = i-1;
-			}
-			count = 0;
-		}
-		
-		if(brac[i]==1){
-			flag++;
-			cons++;
-		}
-		else{
-			if(flag>0)flag--;
-			if(flag)cons++;
-			if(!flag){
-				if(cons > maxseq){
-					maxseq =  cons;
-					maxpos = i-cons+1;
-					cons = 0;
-				}
-			}
-		}
-		
+
+struct exam
+{
+	int starttime;
+	int endtime;
+};
+
+
+bool examcompare(exam lhs, exam rhs)
+{
+	return lhs.starttime<rhs.starttime;
+};
+
+int main()
+{
+
+	long long int counter=0, noofleave=0, noofreturn=0, noofexams=0, bestleave=0, bestreturn=0, trip=0, besttrip=99999999;
+
+	cin>>noofexams>>noofleave>>noofreturn;
+
+	long int leavearray[noofleave], returnarray[noofreturn];
+	exam examarray[noofexams];
+
+
+
+	for(counter=0; counter<noofexams; counter++)
+	{
+		cin>>examarray[counter].starttime>>examarray[counter].endtime;
+	}
+
+	for(counter=0; counter<noofleave; counter++)
+	{
+		cin>>leavearray[counter];
+	}
+
+	for(counter=0; counter<noofreturn; counter++)
+	{
+		cin>>returnarray[counter];
 	}
 
 
-		cout << depth  << " " << depthpos << " " << maxseq << " " << maxpos << newl;
-		
-	
-return 0;
-}
+	sort(examarray, examarray+noofexams, examcompare);
+
+	sort(leavearray, leavearray+noofleave);
+
+	sort(returnarray, returnarray+noofreturn);
+
+	long int low=0, high=0, mid=0;
+
+	for(counter=0; counter<noofexams; counter++)
+	{
+		if(leavearray[0]>examarray[counter].starttime)
+		{
+			continue;
+		}
+
+		else if(leavearray[noofleave-1]<=examarray[counter].starttime)
+		{
+			bestleave=leavearray[noofleave-1];
+		}
+
+		else
+		{
+			low=0;
+			high=noofleave-1;
+
+			while(low!=high)
+			{
+				mid=(high+low)/2;
+
+				if(leavearray[mid]<=examarray[counter].starttime)
+				{
+					low=mid+1;
+				}
+
+				else
+				{
+					high=mid;
+				}
+
+			}
+
+			bestleave=leavearray[high-1];
+		}
+
+		if(returnarray[noofreturn-1]<examarray[counter].endtime)
+		{
+			continue;
+		}
+
+		else if(returnarray[noofreturn-1]==examarray[counter].endtime)
+		{
+			bestreturn=returnarray[noofreturn-1];
+		}
+
+		else
+		{
+			low=0;
+			high=noofreturn-1;
+
+			while(low!=high)
+			{
+				mid=(high+low)/2;
+
+				if(returnarray[mid]<=examarray[counter].endtime)
+				{
+					low=mid+1;
+				}
+
+				else
+				{
+					high=mid;
+				}
+
+			}
+
+			if(returnarray[high-1]==examarray[counter].endtime)
+			{
+				bestreturn=returnarray[high-1];
+			}
+
+			else
+			{
+				bestreturn=returnarray[high];
+			}
+
+		}
+
+		trip=(bestreturn-bestleave)+1;
+
+		if(trip<besttrip)
+		{
+			besttrip=trip;
+		}
+
+	}
+
+
+cout<<besttrip;
+
+	return 0;
+	}
