@@ -5,44 +5,58 @@
 
 using namespace std;
 
+int findOnes(vector<int>total, int limit,vector<int>v){
+	int mu = 0;
+	for(int i = 0; i+limit<total.size();  i++){
+		int ones=0;
+		if(v[i])
+			ones = total[i+limit] - total[i] + 1;
+		else 
+			ones = total[i+limit] - total[i];
+		mu = max(mu,ones);
+	}
+	return mu;
+}
+
+vector<int> rotateRight(vector<int> a){
+	int end = a[a.size()-1];
+	for(int i = a.size()-1; i>0; i--){
+		a[i] = a[i-1];
+	}
+	a[0] = end;
+	return a;
+}
+
+vector<int> evalSum(vector<int >a,  vector<int> bi){
+	for(int i = 0; i<a.size();  i++)
+		i ?  a[i] = a[i-1] +  bi[i] : a[i] = bi[i];
+	return a;
+}
+
 int main(){
 	std::ios::sync_with_stdio(false);
 	
-	int n,k,p,start,end;
+	int n,k,p;
 	string query;
 	cin >> n >> k >> p;
-	k--;
-	vector<int> barr(2*n),sum(n);
+	if(k>n)
+		k=n;
+	vector<int>barr(n),sum(n);
 	for(int i = 0; i<n; i++){
 		cin >> barr[i];
-		if(!i)
-			sum[i] = barr[i];
-		else
-			sum[i] = barr[i] + sum[i-1];
-		barr[n+i] = barr[i];
+		!i ? sum[i] = barr[i] : sum[i] = barr[i] + sum[i-1];
 	}
-	for(int i  = 0; i<sum.size();  i++)
-		cout << sum[i] <<  " ";
-	cout << newl;
-	
 	cin >> query;
-	start = n;
-	end = 2*n-1;
-	for(int i = 0; i<query.length(); i++){
-		int ones = 0,maxones = 0;
+	for(int i =0; i<query.length(); i++){
 		if(query[i]=='!'){
-			start--;
-			end--;
+			barr = rotateRight(barr);
+			sum =  evalSum(sum,barr);
 		}
 		else{
-			for(int j = start; j<=end && j+k<=end;  j++){
-				barr[j] ? ones = barr[j+k] - barr[j] + 1 : ones = barr[j+k] - barr[j];
-				cout << ones  << " ones" << newl;
-				maxones = max(maxones,ones);
-			}
-			cout <<  maxones  << newl;
+			cout << findOnes(sum,k-1,barr) << newl;
 		}
 	}
+	
 	
 return 0;
 }
